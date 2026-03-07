@@ -1,5 +1,6 @@
 # QA Framework
 
+[![CI/CD](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
 [![Status](https://img.shields.io/badge/status-validated-success.svg)](./VALIDATION_REPORT.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
@@ -447,14 +448,26 @@ pip show qa_framework
 
 ## 🤝 Contributing
 
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+
+- Setting up the development environment
+- Coding standards and best practices
+- Testing requirements
+- Submitting pull requests
+
+Quick contribution steps:
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes with tests
-4. Submit a pull request
+4. Commit your changes (`git commit -m 'feat: Add amazing feature'`)
+5. Push to your fork (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2026 Paul Chen
 
 ---
 
