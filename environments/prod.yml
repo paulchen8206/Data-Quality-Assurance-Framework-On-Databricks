@@ -1,0 +1,9 @@
+targets:
+  prod:
+    mode: production
+    workspace:
+      host: https://YOUR_WORKSPACE.cloud.databricks.com
+      root_path: /Workspace/.bundle/prod/${bundle.name}
+    run_as:
+      # Use a service principal for production
+      service_principal_name: YOUR_SERVICE_PRINCIPAL

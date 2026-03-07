@@ -1,0 +1,60 @@
+# Great Expectations configuration file
+#
+# For detailed configuration options, see:
+# https://docs.greatexpectations.io/docs/guides/setup/configuring_data_contexts/
+
+# Configuration version
+config_version: 3.0
+# Data Sources
+datasources:
+  spark_datasource:
+    class_name: Datasource
+    execution_engine:
+      class_name: SparkDFExecutionEngine
+    data_connectors:
+      default_runtime_data_connector:
+        class_name: RuntimeDataConnector
+        batch_identifiers:
+        - default_identifier_name
+# Stores for expectations, validations, and data docs
+stores:
+  expectations_store:
+    class_name: ExpectationsStore
+    store_backend:
+      class_name: TupleFilesystemStoreBackend
+      base_directory: expectations/
+  validations_store:
+    class_name: ValidationsStore
+    store_backend:
+      class_name: TupleFilesystemStoreBackend
+      base_directory: uncommitted/validations/
+  evaluation_parameter_store:
+    class_name: EvaluationParameterStore
+  checkpoint_store:
+    class_name: CheckpointStore
+    store_backend:
+      class_name: TupleFilesystemStoreBackend
+      base_directory: checkpoints/
+# Data documentation site
+data_docs_sites:
+  local_site:
+    class_name: SiteBuilder
+    show_how_to_buttons: true
+    store_backend:
+      class_name: TupleFilesystemStoreBackend
+      base_directory: uncommitted/data_docs/local_site/
+    site_index_builder:
+      class_name: DefaultSiteIndexBuilder
+# Expectations store name
+expectations_store_name: expectations_store
+validations_store_name: validations_store
+evaluation_parameter_store_name: evaluation_parameter_store
+checkpoint_store_name: checkpoint_store
+# Anonymous usage statistics (set to false to disable)
+anonymous_usage_statistics:
+  enabled: true
+  data_context_id: qa_framework_context
+# Plugins directory
+plugins_directory: plugins/
+# Notebooks configuration
+notebooks:

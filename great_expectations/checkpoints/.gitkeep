@@ -1,0 +1,37 @@
+# Checkpoints
+
+This directory contains checkpoint configurations for running validations.
+
+Checkpoints define validation workflows that can be triggered on-demand or automatically.
+
+## Usage
+
+Create checkpoints programmatically or via CLI:
+
+```bash
+great_expectations checkpoint new my_checkpoint
+```
+
+Or in Python:
+
+```python
+from great_expectations.data_context import DataContext
+
+context = DataContext("great_expectations")
+checkpoint_config = {
+    "name": "my_checkpoint",
+    "config_version": 1.0,
+    "class_name": "SimpleCheckpoint",
+    "validations": [
+        {
+            "batch_request": {
+                "datasource_name": "spark_datasource",
+                "data_connector_name": "default_runtime_data_connector",
+                "data_asset_name": "my_asset",
+            },
+            "expectation_suite_name": "my_suite",
+        }
+    ],
+}
+context.add_checkpoint(**checkpoint_config)
+```

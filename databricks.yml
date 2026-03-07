@@ -1,0 +1,10 @@
+# Databricks Bundle Configuration
+bundle:
+  name: qa_framework
+include:
+- resources/*.yml
+- environments/*.yml
+variables:
+  cluster_name:
+    description: Name of the job cluster
+    default: qa-cluster

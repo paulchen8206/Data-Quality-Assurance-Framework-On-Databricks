@@ -1,0 +1,24 @@
+# Expectation Suites
+
+This directory contains JSON files defining expectation suites for data validation.
+
+Each suite is a collection of expectations that can be applied to datasets.
+
+## Creating Suites
+
+Suites are automatically saved here when using the `GreatExpectationsValidator` class:
+
+```python
+from qa_framework.ge_validator import GreatExpectationsValidator
+
+ge_validator = GreatExpectationsValidator(df, expectation_suite_name="my_suite")
+ge_validator.expect_column_values_to_not_be_null("id")
+ge_validator.save_expectation_suite()
+```
+
+## Naming Convention
+
+Use descriptive names for your expectation suites:
+- `user_data_suite` - for user data validations
+- `sales_transaction_suite` - for sales transaction validations
+- `etl_output_suite` - for ETL output validations
