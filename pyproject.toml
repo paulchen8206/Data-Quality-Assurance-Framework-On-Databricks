@@ -3,7 +3,7 @@ name = "qa_framework"
 version = "0.1.0"
 description = "Data quality assurance framework for Databricks"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11,<3.12"
 dependencies = [
     "pyspark>=3.4.0",
     "databricks-sdk>=0.18.0",
@@ -16,9 +16,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+    "build>=1.2.2",
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
     "pytest-mock>=3.11.1",
+    "twine>=5.1.1",
 ]
 
 [build-system]
@@ -36,8 +38,15 @@ python_functions = ["test_*"]
 addopts = [
     "-v",
     "--strict-markers",
+    "--tb=short",
     "--cov=qa_framework",
     "--cov-report=term-missing",
+]
+markers = [
+    "unit: Unit tests",
+    "integration: Integration tests",
+    "slow: Slow running tests",
+    "databricks: Tests that require Databricks connection",
 ]
 
 [tool.coverage.run]

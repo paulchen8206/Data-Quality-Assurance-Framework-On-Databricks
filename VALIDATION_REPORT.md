@@ -43,8 +43,6 @@
 
 ✓ `pyproject.toml` - Modern Python project config (updated for `code/` directory)  
 ✓ `.python-version` - Python 3.11 specified  
-✓ `setup.py` - Legacy setup (updated)  
-✓ `pytest.ini` - Test configuration  
 ✓ `requirements.txt` - Dependency list
 ✓ `databricks.yml` - Bundle configuration  
 ✓ `.gitignore` - Includes GE uncommitted artifacts

@@ -19,6 +19,7 @@ A production-ready Databricks bundle project for data quality assurance with Pyt
 
 - [Quick Start](#-quick-start)
 - [Installation](#-installation)
+- [Build and Wheel](#build-and-wheel)
 - [Usage](#-usage)
 - [Project Structure](#-project-structure)
 - [Testing](#-testing)
@@ -51,7 +52,7 @@ python -c "from qa_framework import DataValidator; print('✓ Ready!')"
 
 ### Prerequisites
 
-- **Python**: 3.11+ (3.8+ supported)
+- **Python**: 3.11
 - **Java**: Required for PySpark (JDK 8 or 11)
 - **Databricks CLI**: For bundle deployment
 
@@ -79,6 +80,60 @@ source .venv/bin/activate  # On macOS/Linux
 
 # Install dependencies
 pip install -e ".[dev]"
+```
+
+## Build and Wheel
+
+Use the included `Makefile` to build and validate wheel artifacts locally.
+
+### 1. Build the wheel
+
+```bash
+make build-wheel
+```
+
+This creates artifacts in `dist/`:
+
+- `qa_framework-<version>-py3-none-any.whl`
+- `qa_framework-<version>.tar.gz`
+
+### 2. Verify package metadata
+
+```bash
+make check-wheel
+```
+
+### 3. Install the built wheel
+
+```bash
+make install-wheel
+```
+
+### 4. Smoke test installed wheel
+
+```bash
+make smoke-wheel
+```
+
+Expected output:
+
+```text
+wheel import OK
+```
+
+### 5. Use the installed package
+
+```bash
+python -c "from qa_framework import DataValidator, GreatExpectationsValidator; print(DataValidator, GreatExpectationsValidator)"
+```
+
+If you prefer plain commands (without `make`):
+
+```bash
+python -m pip install --upgrade pip build twine
+python -m build
+python -m twine check dist/*
+python -m pip install --force-reinstall dist/qa_framework-*.whl
 ```
 
 ### Databricks Configuration
@@ -187,7 +242,6 @@ Qa-Framework/
 ├── databricks.yml              # Bundle configuration
 ├── pyproject.toml              # Modern Python project config
 ├── requirements.txt            # Dependencies
-├── pytest.ini                  # Test configuration
 ├── README.md                   # This file
 ├── VALIDATION_REPORT.md        # Validation status
 │
