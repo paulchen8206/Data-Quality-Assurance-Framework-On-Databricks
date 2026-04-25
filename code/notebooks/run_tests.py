@@ -5,7 +5,7 @@ Run QA tests in Databricks environment
 
 # COMMAND ----------
 
-# MAGIC %pip install -r ../../requirements.txt
+# MAGIC %pip install -e ../../
 
 # COMMAND ----------
 

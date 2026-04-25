@@ -2,7 +2,7 @@
 
 [![CI/CD](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
-[![Status](https://img.shields.io/badge/status-validated-success.svg)](./VALIDATION_REPORT.md)
+[![Status](https://img.shields.io/badge/status-validated-success.svg)](./docs/validation_report.md)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A production-ready Databricks bundle project for data quality assurance with Python. Features both lightweight validators for quick checks and comprehensive Great Expectations integration for advanced data quality pipelines.
@@ -34,18 +34,17 @@ A production-ready Databricks bundle project for data quality assurance with Pyt
 # 1. Clone and navigate to the project
 cd /path/to/Qa-Framework
 
-# 2. Create virtual environment and install
-python -m venv .venv
-source .venv/bin/activate  # On macOS/Linux
+# 2. Sync dependencies (creates and manages .venv)
+uv sync --all-groups
 
 # 3. Install package with dependencies
-pip install -e ".[dev]"
+uv sync --all-groups
 
 # 4. Run tests
-pytest tests/test_utils.py -v
+uv run pytest tests/test_utils.py -v
 
 # 5. Try the DataValidator
-python -c "from qa_framework import DataValidator; print('✓ Ready!')"
+uv run python -c "from qa_framework import DataValidator; print('✓ Ready!')"
 ```
 
 ## 📦 Installation
@@ -64,22 +63,8 @@ python -c "from qa_framework import DataValidator; print('✓ Ready!')"
 # Install uv
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Create environment and install
-uv venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-```
-
-### Using pip
-
-```bash
-# Create virtual environment
-python -m venv .venv
-source .venv/bin/activate  # On macOS/Linux
-# .venv\Scripts\activate   # On Windows
-
-# Install dependencies
-pip install -e ".[dev]"
+# Install all dependency groups (dev is default)
+uv sync --all-groups
 ```
 
 ## Build and Wheel
@@ -130,17 +115,17 @@ python -c "from qa_framework import DataValidator, GreatExpectationsValidator; p
 If you prefer plain commands (without `make`):
 
 ```bash
-python -m pip install --upgrade pip build twine
-python -m build
-python -m twine check dist/*
-python -m pip install --force-reinstall dist/qa_framework-*.whl
+uv sync --all-groups
+uv build
+uvx twine check dist/*
+uv pip install --force-reinstall dist/qa_framework-*.whl
 ```
 
 ### Databricks Configuration
 
 1. Install Databricks CLI:
    ```bash
-   pip install databricks-cli
+    uv tool install databricks-cli
    ```
 
 2. Configure authentication:
@@ -241,9 +226,11 @@ See complete working examples:
 Qa-Framework/
 ├── databricks.yml              # Bundle configuration
 ├── pyproject.toml              # Modern Python project config
-├── requirements.txt            # Dependencies
-├── README.md                   # This file
-├── VALIDATION_REPORT.md        # Validation status
+├── uv.lock                     # Locked dependencies for reproducible builds
+├── readme.md                   # This file
+├── docs/                       # Project documentation
+│   ├── validation_report.md    # Validation status
+│   └── contributing.md         # Contribution guide
 │
 ├── code/                      
 │   ├── qa_framework/           # Main package
@@ -281,20 +268,17 @@ Qa-Framework/
 ### Run Tests Locally
 
 ```bash
-# Activate environment
-source .venv/bin/activate
-
 # Run all tests
-pytest
+uv run pytest
 
 # Run specific test file
-pytest tests/test_utils.py -v
+uv run pytest tests/test_utils.py -v
 
 # Run with coverage
-pytest --cov=qa_framework --cov-report=html
+uv run pytest --cov=qa_framework --cov-report=html
 
 # Run only fast tests (skip PySpark tests)
-pytest tests/test_utils.py -v
+uv run pytest tests/test_utils.py -v
 ```
 
 ### Test Categories
@@ -344,8 +328,8 @@ databricks bundle run qa_ge_test_job -t dev
 
 1. **Local Development**
    - Make changes locally
-   - Run unit tests: `pytest tests/test_utils.py`
-   - Test import: `python -c "from qa_framework import DataValidator"`
+    - Run unit tests: `uv run pytest tests/test_utils.py`
+    - Test import: `uv run python -c "from qa_framework import DataValidator"`
 
 2. **Dev Environment**
    - Deploy: `databricks bundle deploy -t dev`
@@ -372,21 +356,21 @@ databricks bundle run qa_ge_test_job -t dev
    - Update documentation
 
 3. **Test Locally**
-   ```bash
-   pytest tests/test_utils.py -v
-   python -c "from qa_framework import DataValidator"
-   ```
+    ```bash
+    uv run pytest tests/test_utils.py -v
+    uv run python -c "from qa_framework import DataValidator"
+    ```
 
 4. **Deploy to Dev**
-   ```bash
-   databricks bundle deploy -t dev
-   databricks bundle run qa_test_job -t dev
-   ```
+    ```bash
+    databricks bundle deploy -t dev
+    databricks bundle run qa_test_job -t dev
+    ```
 
 5. **Create Pull Request**
-   - Ensure tests pass
-   - Update [VALIDATION_REPORT.md](VALIDATION_REPORT.md) if needed
-   - Request review
+    - Ensure tests pass
+    - Update [docs/validation_report.md](docs/validation_report.md) if needed
+    - Request review
 
 ### Adding New Validators
 
@@ -446,7 +430,7 @@ def expect_custom_validation(
 
 ```bash
 # Reinstall in editable mode
-pip install -e ".[dev]"
+uv sync --all-groups
 ```
 
 ### PySpark Test Failures
@@ -475,7 +459,7 @@ cat databricks.yml | grep workspace_url
 
 ## ✅ Validation
 
-See [VALIDATION_REPORT.md](VALIDATION_REPORT.md) for:
+See [docs/validation_report.md](docs/validation_report.md) for:
 - Complete validation status
 - Known issues and notes
 - Test results
@@ -485,13 +469,13 @@ See [VALIDATION_REPORT.md](VALIDATION_REPORT.md) for:
 
 ```bash
 # Verify installation
-python -c "from qa_framework import DataValidator, GreatExpectationsValidator; print('✓ Installation OK')"
+uv run python -c "from qa_framework import DataValidator, GreatExpectationsValidator; print('✓ Installation OK')"
 
 # Run fast tests
-pytest tests/test_utils.py -v
+uv run pytest tests/test_utils.py -v
 
 # Check package details
-pip show qa_framework
+uv pip show qa_framework
 ```
 
 ## 📚 Resources
@@ -502,7 +486,7 @@ pip show qa_framework
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines on:
+We welcome contributions! Please see [docs/contributing.md](docs/contributing.md) for detailed guidelines on:
 
 - Setting up the development environment
 - Coding standards and best practices

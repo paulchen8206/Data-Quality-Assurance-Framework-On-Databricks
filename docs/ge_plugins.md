@@ -11,7 +11,7 @@ from great_expectations.execution_engine import PandasExecutionEngine
 from great_expectations.expectations.expectation import ColumnMapExpectation
 
 class ExpectColumnValuesToBeCustom(ColumnMapExpectation):
-    \"\"\"Expect column values to meet custom criteria.\"\"\"
+    """Expect column values to meet custom criteria."""
     
     # Implementation here
     pass

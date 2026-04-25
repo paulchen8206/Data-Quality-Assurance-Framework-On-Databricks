@@ -26,9 +26,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
    ```
 3. **Set up the development environment**:
    ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On macOS/Linux
-   pip install -e ".[dev]"
+   uv sync --all-groups
    ```
 4. **Add upstream remote**:
    ```bash
@@ -73,7 +71,7 @@ By participating in this project, you agree to maintain a respectful and inclusi
 
 3. **Run tests locally**:
    ```bash
-   pytest tests/test_utils.py -v
+   uv run pytest tests/test_utils.py -v
    ```
 
 4. **Commit your changes**:
@@ -131,7 +129,7 @@ def check_validation(self, column: str, threshold: float = 0.95) -> bool:
 
 - Use clear, concise language
 - Include code examples
-- Update README.md for major changes
+- Update readme.md for major changes
 - Add docstrings with proper formatting
 
 ## Testing Guidelines
@@ -162,13 +160,13 @@ def test_feature_name():
 
 ```bash
 # Run all tests
-pytest
+uv run pytest
 
 # Run specific test file
-pytest tests/test_validators.py -v
+uv run pytest tests/test_validators.py -v
 
 # Run with coverage
-pytest --cov=qa_framework --cov-report=html
+uv run pytest --cov=qa_framework --cov-report=html
 ```
 
 ## Submitting Changes
@@ -206,7 +204,7 @@ pytest --cov=qa_framework --cov-report=html
 
 Always activate the virtual environment before working:
 ```bash
-source .venv/bin/activate
+uv sync --all-groups
 ```
 
 ### Keeping Your Fork Updated
