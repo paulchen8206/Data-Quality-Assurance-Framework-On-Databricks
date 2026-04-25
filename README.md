@@ -1,4 +1,4 @@
-# QA Framework
+# Data Quality Assurance Framework
 
 [![CI/CD](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/paulchen8206/Qa-Framework-On-Databricks/actions/workflows/ci-cd.yml)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
